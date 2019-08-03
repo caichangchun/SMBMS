@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elead.dao.SmbmsStatisticalMapper">
+    <resultMap id="BaseResultMap" type="com.elead.pojo.SmbmsStatistical">
+        <result column="date" jdbcType="TIMESTAMP" property="date" />
+        <result column="productName" jdbcType="VARCHAR" property="productname" />
+        <result column="price" jdbcType="BIGINT" property="price" />
+
+        <result column="date" jdbcType="TIMESTAMP" property="daytotalprice_date" />
+        <result column="total" jdbcType="BIGINT" property="total" />
+
+        <result column="productName" jdbcType="VARCHAR" property="product_name" />
+        <result column="total_price" jdbcType="BIGINT" property="total_price" />
+
+        <result column="date" jdbcType="TIMESTAMP" property="billcount_date" />
+        <result column="bill_count" jdbcType="BIGINT" property="bill_count" />
+
+        <result column="date" jdbcType="TIMESTAMP" property="dayproductpercent_date" />
+        <result column="productName" jdbcType="VARCHAR" property="dayproductpercent_name" />
+        <result column="totalprice" jdbcType="BIGINT" property="dayproductpercent_price" />
+    </resultMap>
+
+    <select id="getTopnProduct" parameterType="java.sql.Date" resultMap="BaseResultMap">
+        select *
+        from smbms_topnproduct
+          where
+          date=#{date,jdbcType=VARCHAR}
+          order by price desc
+          limit 6
+    </select>
+
+    <select id="getAllTopnProduct" parameterType="java.sql.Date" resultMap="BaseResultMap">
+        select *
+        from smbms_alltopnproduct
+          order by total_price desc
+          limit 6
+    </select>
+
+    <select id="getDayTotalPrice" parameterType="java.sql.Date" resultMap="BaseResultMap">
+        select *
+        from smbms_daytotalprice
+          where
+        date BETWEEN DATE_ADD(#{date,jdbcType=VARCHAR}, INTERVAL - 7 DAY) AND  #{date,jdbcType=VARCHAR};
+    </select>
+
+    <select id="getProductPercent"  resultMap="BaseResultMap">
+        select *
+        from smbms_producttotalprice
+    </select>
+
+    <select id="getDayProductPercent"  parameterType="java.sql.Date" resultMap="BaseResultMap">
+        select *
+        from smbms_dayproductpercent
+        where
+        date=#{date,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getBillCount"  parameterType="java.sql.Date" resultMap="BaseResultMap">
+        select *
+        from smbms_billcount
+          where
+        date BETWEEN DATE_ADD(#{date,jdbcType=VARCHAR}, INTERVAL - 7 DAY) AND  #{date,jdbcType=VARCHAR};
+    </select>
+
+    <select id="getStatisstical"  parameterType="java.sql.Date" resultMap="BaseResultMap">
+        select *
+        from smbms_billcount
+          where
+        date BETWEEN DATE_ADD(#{date,jdbcType=VARCHAR}, INTERVAL - 7 DAY) AND  #{date,jdbcType=VARCHAR};
+    </select>
+</mapper>

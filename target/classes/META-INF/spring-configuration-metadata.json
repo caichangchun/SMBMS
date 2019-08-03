@@ -1,0 +1,12 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.elead.datasource.SingleDataSourceConfiguration",
+      "name": "jdbc.ds",
+      "sourceMethod": "readDataSource()",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}
